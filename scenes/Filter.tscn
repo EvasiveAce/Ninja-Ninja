@@ -1,0 +1,13 @@
+[gd_scene load_steps=2 format=2]
+
+[ext_resource path="res://shaders/crt_material.tres" type="Material" id=1]
+
+[node name="Filter" type="ColorRect"]
+material = ExtResource( 1 )
+anchor_right = 0.533
+anchor_bottom = 0.889
+margin_right = 0.159973
+margin_bottom = -0.030014
+__meta__ = {
+"_edit_use_anchors_": false
+}
