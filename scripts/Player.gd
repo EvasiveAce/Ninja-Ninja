@@ -6,7 +6,9 @@ const  ACCELERATION = 5
 const  MAX_SPEED = 100
 const  JUMP_HEIGHT = -350
 
-var playerTexture = preload("res://sprites/characters/mainNinjaSpritesheet.png")
+var playerTexture
+var playerTextureDefault = preload("res://sprites/characters/mainNinjaSpritesheet.png")
+var shurikenProjectile = preload("res://scenes/Shuriken.tscn")
 
 var motion = Vector2()
 
@@ -14,11 +16,20 @@ var state_machine
 
 func _ready():
 	state_machine = $PlayerAnimationTree.get("parameters/playback")
+	playerTexture = playerTextureDefault
 
 func _physics_process(delta):
 	_movement()
 	$PlayerSprite.texture = playerTexture
 
+func _throw():
+	var shuriken = shurikenProjectile.instance()
+	shuriken.position = $PlayerThrowPosition.global_position
+	if playerTexture == playerTextureDefault:
+		shuriken._shuriken_instanciation(0, sign($PlayerThrowPosition.position.x))
+	else:
+		shuriken._shuriken_instanciation(1, sign($PlayerThrowPosition.position.x))
+	get_parent().get_node("ShurikenContainer").add_child(shuriken)
 
 func _movement():
 	motion.y += GRAVITY
@@ -27,10 +38,12 @@ func _movement():
 	if Input.is_action_pressed("ui_right"):
 		motion.x = min(motion.x + ACCELERATION, MAX_SPEED)
 		$PlayerSprite.flip_h = false
+		$PlayerThrowPosition.position = Vector2(11,1)
 		state_machine.travel("Run")
 	elif Input.is_action_pressed("ui_left"):
 		motion.x = max(motion.x - ACCELERATION, -MAX_SPEED)
 		$PlayerSprite.flip_h = true
+		$PlayerThrowPosition.position = Vector2(-11,1)
 		state_machine.travel("Run")
 	else:
 		state_machine.travel("Idle")
@@ -38,6 +51,8 @@ func _movement():
 		
 	if is_on_floor():
 		if Input.is_action_just_pressed("ui_accept"):
+			_throw()
+		if Input.is_action_just_pressed("ui_select"):
 			motion.y = JUMP_HEIGHT
 		if friction:
 			motion.x = lerp(motion.x, 0, 0.2)

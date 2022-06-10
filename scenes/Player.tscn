@@ -120,6 +120,7 @@ script = ExtResource( 2 )
 texture = ExtResource( 1 )
 hframes = 10
 vframes = 14
+frame = 1
 
 [node name="PlayerCollision" type="CollisionShape2D" parent="."]
 shape = SubResource( 1 )
@@ -135,3 +136,6 @@ tree_root = SubResource( 17 )
 anim_player = NodePath("../PlayerAnimationPlayer")
 active = true
 parameters/playback = SubResource( 18 )
+
+[node name="PlayerThrowPosition" type="Position2D" parent="."]
+position = Vector2( 11, 1 )
