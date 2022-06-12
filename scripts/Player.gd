@@ -29,7 +29,7 @@ func _throw():
 		shuriken._shuriken_instanciation(0, sign($PlayerThrowPosition.position.x))
 	else:
 		shuriken._shuriken_instanciation(1, sign($PlayerThrowPosition.position.x))
-	get_parent().get_node("ShurikenContainer").add_child(shuriken)
+	#get_parent().get_node("ShurikenContainer").add_child(shuriken)
 
 func _movement():
 	motion.y += GRAVITY

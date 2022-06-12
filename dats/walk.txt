@@ -1,0 +1,1 @@
+ui_right,RELEASED,ui_select,RELEASED,ui_select,RELEASED,ui_left,RELEASED,ui_right,RELEASED,ui_select,RELEASED,ui_left,RELEASED,ui_select,RELEASED,ui_right,RELEASED,ui_select,RELEASED,ui_select,RELEASED,ui_right,RELEASED
