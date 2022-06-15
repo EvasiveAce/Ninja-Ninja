@@ -8,8 +8,6 @@ var directionVel
 func _ready():
 	$ShurikenAnimatedSprite.play("Thrown")
 
-
-
 func _physics_process(delta):
 	velocity.x = speed * delta * directionVel
 	translate(velocity)

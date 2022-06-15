@@ -6,34 +6,99 @@
 [ext_resource path="res://sprites/scenes/NormalBackgroundSky.png" type="Texture" id=4]
 [ext_resource path="res://sprites/scenes/NormalBackgroundTrees.png" type="Texture" id=5]
 [ext_resource path="res://sprites/scenes/NormalBackgroundMountains.png" type="Texture" id=6]
-[ext_resource path="res://scripts/InsertCoinButton.gd" type="Script" id=7]
 [ext_resource path="res://fonts/Kenney Pixel.ttf" type="DynamicFontData" id=8]
 [ext_resource path="res://animations/mainScenesInsertCoinAnimation.tres" type="Animation" id=9]
 [ext_resource path="res://scenes/Player.tscn" type="PackedScene" id=10]
-[ext_resource path="res://scenes/InputCapture.tscn" type="PackedScene" id=11]
 [ext_resource path="res://scenes/OutputCapture.tscn" type="PackedScene" id=12]
-[ext_resource path="res://scenes/PlayerCapture.tscn" type="PackedScene" id=13]
+[ext_resource path="res://scripts/StartScreen.gd" type="Script" id=13]
 
-[sub_resource type="DynamicFont" id=1]
-size = 32
-use_filter = true
-font_data = ExtResource( 8 )
+[sub_resource type="StyleBoxEmpty" id=1]
 
 [sub_resource type="DynamicFont" id=2]
 size = 32
 use_filter = true
 font_data = ExtResource( 8 )
 
-[sub_resource type="StyleBoxEmpty" id=3]
+[sub_resource type="DynamicFont" id=3]
+size = 32
+use_filter = true
+font_data = ExtResource( 8 )
 
-[sub_resource type="DynamicFont" id=4]
+[sub_resource type="StyleBoxEmpty" id=4]
+
+[sub_resource type="DynamicFont" id=5]
 size = 32
 font_data = ExtResource( 8 )
 
-[sub_resource type="Animation" id=5]
-resource_name = "FightScene"
+[sub_resource type="Animation" id=6]
+length = 6.0
+tracks/0/type = "value"
+tracks/0/path = NodePath("InsertCoinButton/InsertCoinLabel:margin_left")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 6 ),
+"transitions": PoolRealArray( 1, 1 ),
+"update": 0,
+"values": [ 182.0, 14.0 ]
+}
+tracks/1/type = "value"
+tracks/1/path = NodePath("InsertCoinButton/InsertCoinLabel:margin_top")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/keys = {
+"times": PoolRealArray( 0, 6 ),
+"transitions": PoolRealArray( 1, 1 ),
+"update": 0,
+"values": [ 3.14009, 3.14009 ]
+}
+tracks/2/type = "value"
+tracks/2/path = NodePath("InsertCoinButton/InsertCoinLabel:margin_right")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/keys = {
+"times": PoolRealArray( 0, 6 ),
+"transitions": PoolRealArray( 1, 1 ),
+"update": 0,
+"values": [ 250.943, 82.0 ]
+}
+tracks/3/type = "value"
+tracks/3/path = NodePath("InsertCoinButton/InsertCoinLabel:margin_bottom")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/keys = {
+"times": PoolRealArray( 0, 6 ),
+"transitions": PoolRealArray( 1, 1 ),
+"update": 0,
+"values": [ 54.1401, 54.1401 ]
+}
+
+[sub_resource type="Animation" id=7]
+length = 2.5
+loop = true
+tracks/0/type = "value"
+tracks/0/path = NodePath("InsertCoinButton/InsertCoinLabel:visible")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 1.2 ),
+"transitions": PoolRealArray( 1, 1 ),
+"update": 1,
+"values": [ true, false ]
+}
 
 [node name="StartScreen" type="Node2D"]
+script = ExtResource( 13 )
 __meta__ = {
 "_edit_vertical_guides_": [ 240.0 ]
 }
@@ -68,19 +133,19 @@ margin_left = 191.213
 margin_top = 75.8976
 margin_right = 289.213
 margin_bottom = 105.898
-custom_fonts/font = SubResource( 1 )
+custom_styles/focus = SubResource( 1 )
+custom_fonts/font = SubResource( 2 )
 flat = true
-script = ExtResource( 7 )
 __meta__ = {
 "_edit_use_anchors_": false
 }
 
 [node name="InsertCoinLabel" type="Label" parent="InsertCoinButton"]
-margin_left = -153.0
+margin_left = 14.0
 margin_top = 3.14009
-margin_right = -84.0571
+margin_right = 82.9429
 margin_bottom = 54.1401
-custom_fonts/font = SubResource( 2 )
+custom_fonts/font = SubResource( 3 )
 custom_colors/font_color_shadow = Color( 1, 0.886275, 0.568627, 1 )
 text = "INSERT
 COIN"
@@ -99,8 +164,8 @@ margin_left = 193.0
 margin_top = 88.0
 margin_right = 289.0
 margin_bottom = 118.0
-custom_styles/focus = SubResource( 3 )
-custom_fonts/font = SubResource( 4 )
+custom_styles/focus = SubResource( 4 )
+custom_fonts/font = SubResource( 5 )
 text = "START"
 flat = true
 __meta__ = {
@@ -114,12 +179,8 @@ margin_right = 368.0
 margin_bottom = 255.0
 
 [node name="Player" parent="." instance=ExtResource( 10 )]
-position = Vector2( 100.232, 127.18 )
+position = Vector2( 100, 127 )
 scale = Vector2( 0.5, 0.5 )
-
-[node name="PlayerCapture" parent="Player" instance=ExtResource( 13 )]
-position = Vector2( -200.464, -254.36 )
-scale = Vector2( 2, 2 )
 
 [node name="Cabinet" type="Sprite" parent="."]
 position = Vector2( 240, 135 )
@@ -127,11 +188,10 @@ scale = Vector2( 0.25, 0.25 )
 texture = ExtResource( 3 )
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="."]
-anims/FightScene = SubResource( 5 )
 anims/InsertCoinAnimation = ExtResource( 9 )
-
-[node name="InputCapture" parent="." instance=ExtResource( 11 )]
+anims/InsertCoinAnimationOutro = SubResource( 6 )
+anims/InsertCoinBlink = SubResource( 7 )
 
 [node name="OutputCapture" parent="." instance=ExtResource( 12 )]
 
-[connection signal="timeout" from="InsertCoinButton/InsertCoinTimer" to="InsertCoinButton" method="_on_InsertCoinTimer_timeout"]
+[connection signal="pressed" from="InsertCoinButton" to="." method="_on_InsertCoinButton_pressed"]

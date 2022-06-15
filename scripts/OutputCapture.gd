@@ -6,10 +6,13 @@ var timeArray
 # var a = 2
 # var b = "text"
 var iterator = 0
-var ready = true
+var ready = false
+
+signal cutscene_finished
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
+	get_parent().get_node("Player").position = Vector2(100, 127)
 	direction = Array(_load('res://dats/walk.txt').split(","))
 	timeArray = Array(_load('res://dats/walkTime.txt').split(","))
 
@@ -18,6 +21,9 @@ func _process(delta):
 	if iterator <= direction.size() and ready:
 		_movement(direction[iterator - 1], float(timeArray[iterator - 1]))
 		iterator += 1
+		if iterator == direction.size() + 1:
+			ready = false
+			emit_signal("cutscene_finished")
 
 func _load(fileLoc):
 	var file = File.new()
@@ -38,3 +44,9 @@ func _movement(key, time):
 		Input.action_release(key)
 		ready = true
 
+func _cutscene_finished():
+	_reset()
+	
+func _reset():
+	get_parent().get_node("Player").position = Vector2(100, 127)
+	ready = false
