@@ -14,9 +14,13 @@ const tBackgroundTrees = preload("res://sprites/scenes/TaintedBackgroundTrees.pn
 const nNinja = preload("res://sprites/characters/mainNinjaSpritesheet.png")
 const tNinja = preload("res://sprites/characters/taintedNinjaSpritesheet.png")
 
+var rng = RandomNumberGenerator.new()
+
+export(PackedScene) var potato
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
+	rng.randomize()
 	_removeInput()
 	$StartButton.grab_focus()
 	$Player.visible = false
@@ -25,6 +29,10 @@ func _ready():
 func _process(delta):
 	if Input.is_action_just_pressed("ui_down"):
 		_world_shift()
+	if $EnemyContainer.get_child_count() == 0 and $Player.visible:
+		var spawned_potato = potato.instance()
+		_enemySpawnInit(spawned_potato)
+		$EnemyContainer.add_child(spawned_potato)
 
 func _world_shift():
 	if imageTexture.current_frame == 0:
@@ -57,3 +65,19 @@ func _removeInput():
 		index += 1
 	for d in all_actions:
 		InputMap.action_erase_events(d)
+
+func _enemySpawnInit(enemy):
+	var modulateInt = rng.randi_range(0, 1)
+	if modulateInt == 0:
+		enemy.modulate = Color(1,1,1,.5)
+		enemy.set_collision_mask(17)
+	else:
+		enemy.modulate = Color(1,1,1,1)
+		enemy.set_collision_mask(25)
+	var sideInt = rng.randi_range(0, 1)
+	if sideInt == 0:
+		enemy.position = Vector2(rng.randf_range(70, 107), 168)
+		enemy.flip = false
+	else:
+		enemy.position = Vector2(rng.randf_range(375, 411), 168)
+		enemy.flip = true
