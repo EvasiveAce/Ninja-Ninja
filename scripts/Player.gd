@@ -6,7 +6,10 @@ const ACCELERATION = 5
 const MAX_SPEED = 100
 const JUMP_HEIGHT = -350
 
+var throwRate = 1
 var throwEnabled = false
+var screen_size = Vector2(480, 270)
+
 
 var playerTexture
 var playerTextureDefault = preload("res://sprites/characters/mainNinjaSpritesheet.png")
@@ -27,7 +30,7 @@ func _physics_process(delta):
 	if Input.is_action_just_pressed("ui_accept") and throwEnabled:
 			_throw()
 			throwEnabled = false
-			yield(get_tree().create_timer(.5), "timeout")
+			yield(get_tree().create_timer(throwRate), "timeout")
 			throwEnabled = true
 
 func _throw():

@@ -11,11 +11,13 @@ var motion = Vector2()
 #enemyBasics
 var HP = 0
 var flip = false
+var movementEnabled = true
+var damage = 1
 #enemyBasics
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
-	HP = 3
+	HP = 1
 	
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
@@ -24,7 +26,8 @@ func _process(delta):
 		$PotatomousSprite.flip_h = true
 	elif flip == false:
 		$PotatomousSprite.flip_h = false
-	_movement()
+	if movementEnabled:
+		_movement()
 
 func _worldShift():
 	if modulate == Color(1,1,1,1):
@@ -51,5 +54,14 @@ func _shurikenHit(dmg):
 		_death()
 
 func _death():
+	$PotatomousSprite.hide()
+	movementEnabled = false
+	$PotatomousAnimatedSprite.show()
+	$PotatomousAnimatedSprite.play("Death")
+	yield($PotatomousAnimatedSprite, "animation_finished")
 	queue_free()
-	#PlayAnimation
+
+func _on_PotatomousArea_area_entered(area):
+		if area.is_in_group("House"):
+			area._update_healthbar(1)
+			_death()
